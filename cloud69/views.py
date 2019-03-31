@@ -5,3 +5,6 @@ def index(request):
     template = loader.get_template('cloud69/index.html')
     return HttpResponse(template.render({}, request))
 
+def create(request):
+    template = loader.get_template('cloud69/success.html')
+    return HttpResponse(template.render({}, request))
