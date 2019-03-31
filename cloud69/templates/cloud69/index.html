@@ -2,3 +2,9 @@
   {% csrf_token %}
   <input type="submit" value="Create instance">
 </form>
+
+
+<form action="/cloud69/delete_all" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="Delete instances">
+</form>
