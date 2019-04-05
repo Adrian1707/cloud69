@@ -15,3 +15,5 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    tty: true
+    stdin_open: true
