@@ -10,6 +10,10 @@ class EC2Client(object):
         self.client = self.ec2_client()
         self.resource = self.ec2_resource()
 
+    def get_instances(self):
+        response = self.client.describe_instances()
+        return response["Reservations"][0]["Instances"]
+
     def create_ec2_instance(self):
         key_name = self.randomString()
 
