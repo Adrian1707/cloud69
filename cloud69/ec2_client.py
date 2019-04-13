@@ -12,9 +12,11 @@ class EC2Client(object):
 
     def get_instances(self):
         response = self.client.describe_instances()["Reservations"]
-        # pdb.set_trace()
+        instances = []
         if response != []:
-            return response[0]["Instances"]
+            for instance in response:
+                instances.append(instance["Instances"][0])
+            return instances
         else:
             return []
 

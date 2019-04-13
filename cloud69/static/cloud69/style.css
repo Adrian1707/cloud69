@@ -1,0 +1,8 @@
+.instance {
+  border-top: 2px solid green;
+  margin-right: 10%;
+}
+
+.instances {
+  display: flex;
+}
