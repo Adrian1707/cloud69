@@ -11,8 +11,12 @@ class EC2Client(object):
         self.resource = self.ec2_resource()
 
     def get_instances(self):
-        response = self.client.describe_instances()
-        return response["Reservations"][0]["Instances"]
+        response = self.client.describe_instances()["Reservations"]
+        # pdb.set_trace()
+        if response != []:
+            return response[0]["Instances"]
+        else:
+            return []
 
     def create_ec2_instance(self):
         key_name = self.randomString()

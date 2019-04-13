@@ -11,15 +11,13 @@
       <div class="row justify-content-center">
         <div class="col-8">
           <h1 class="mt-2">Cloud69</h1>
-          {% for instance in instances %}
+          {% for instance in instance_models %}
             <div class="something">
-              <p>{{ instance.InstanceId }}</p>
-              <p>{{ instance.ImageId }}</p>
+              <p>Instance Id: {{ instance.instance_id }}</p>
+              <p>Instance Name: {{ instance.name }}</p>
             </div>
           {% endfor %}
           <hr class="mt-0 mb-4">
-          {% block content %}
-          {% endblock %}
         <div class="col-4">
           <form action="/cloud69/create" method="POST">
             {% csrf_token %}
