@@ -1,0 +1,17 @@
+.instance {
+  border-top: 2px solid green;
+  margin-right: 10%; }
+
+.instances {
+  display: flex; }
+
+.button {
+  border-radius: 60px; }
+
+.button--create {
+  background-color: green; }
+
+.button--delete {
+  background-color: red; }
+
+/*# sourceMappingURL=style.css.map */

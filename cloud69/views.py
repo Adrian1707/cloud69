@@ -9,7 +9,8 @@ def index(request):
     template = loader.get_template('cloud69/index.html')
     instance_models = []
     for instance in instances:
-        instance_models.append(EC2Instance.create(instance_response = instance))
+        if instance['State']["Name"] != 'terminated':
+            instance_models.append(EC2Instance.create(instance_response = instance))
 
     html = template.render({'instance_models': instance_models }, request)
     return HttpResponse(html)
@@ -17,6 +18,12 @@ def index(request):
 def create(request):
     EC2Client().create_ec2_instance()
     template = loader.get_template('cloud69/success.html')
+    return HttpResponse(template.render({}, request))
+
+def delete(request):
+    instance_id = request.POST.dict().get("instance_id")
+    EC2Client().delete_instance(instance_id)
+    template = loader.get_template("cloud69/success.html")
     return HttpResponse(template.render({}, request))
 
 def delete_all(request):

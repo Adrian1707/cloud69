@@ -1,40 +1,45 @@
 <html lang="en">
-  {% load static %}
+  {% load sass_tags %}
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static 'cloud69/style.css' %}">
-    <title>Django People</title>
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'cloud69/style.scss' %}">
+    <title>Cloud69</title>
   </head>
   <body>
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-8">
+        <div class="col-12">
           <h1 class="mt-2">Cloud69</h1>
           <div class="row">
-            <div class="col-md-12 instances">
+            <div class="col-md-10 instances">
               {% for instance in instance_models %}
                 <div class="instance">
                   <p>Instance Id: {{ instance.instance_id }}</p>
                   <p>Instance Name: {{ instance.name }}</p>
+                  <form action="/cloud69/delete" method="POST">
+                    {% csrf_token %}
+                    <input class="button button--delete" type="submit" value="Delete instance">
+                    <input type="hidden" name="instance_id" value={{ instance.instance_id}}>
+                  </form>
                 </div>
               {% endfor %}
              </div>
+            <div class="col-md-2">
+              <form action="/cloud69/create" method="POST">
+                {% csrf_token %}
+                <input class="button button--create" type="submit" value="Create instance">
+              </form>
+
+
+              <form action="/cloud69/delete_all" method="POST">
+                {% csrf_token %}
+                <input class="button button--delete" type="submit" value="Delete instances">
+              </form>
+            </div>
           </div>
           <hr class="mt-0 mb-4">
-        <div class="col-4">
-          <form action="/cloud69/create" method="POST">
-            {% csrf_token %}
-            <input type="submit" value="Create instance">
-          </form>
-
-
-          <form action="/cloud69/delete_all" method="POST">
-            {% csrf_token %}
-            <input type="submit" value="Delete instances">
-          </form>
-        </div>
       </div>
     </div>
   </body>

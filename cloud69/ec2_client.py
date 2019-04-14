@@ -41,6 +41,9 @@ class EC2Client(object):
             KeyName=key_name
         )
 
+    def delete_instance(self, id):
+        self.resource.instances.filter(InstanceIds = [id]).terminate()
+
     def delete_all_ec2_instances(self):
         self.resource.instances.terminate()
 
