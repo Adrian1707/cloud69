@@ -32,6 +32,11 @@
                 <input class="button button--create" type="submit" value="Create instance">
               </form>
 
+              <form action="/cloud69/new_stack" method="GET">
+                {% csrf_token %}
+                <input class="button button--create" type="submit" value="New Application">
+              </form>
+
 
               <form action="/cloud69/delete_all" method="POST">
                 {% csrf_token %}
