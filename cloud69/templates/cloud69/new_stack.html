@@ -1,0 +1,21 @@
+<form action="/cloud69/create_stack" method="POST">
+  {% csrf_token %}
+  <input type="text" name="github_url" placeholder="Github URL">
+  <input type="text" name="app_name" placeholder="App name">
+  <input type="text" name="db_name" placeholder="Database Name">
+  <input type="text" name="db_user" placeholder="Database User">
+  <input type="text" name="db_password" placeholder="Database Password">
+  <input type="text" name="web_server_capacity" placeholder="Web Server Capacity e.g. 2">
+  <input type="text" name="db_allocated_storage" placeholder="DB Allocated Storage (between 5-1024GB)">
+  <select name="ec2_type">
+    {% for instance in ec2_instance_types %}
+      <option name="ec2_type" value={{ instance }}>{{ instance }}</option>
+    {% endfor %}
+  </select>
+  <select name="db_type">
+    {% for instance in db_instance_types %}
+      <option name="db_type" value={{ instance }}>{{ instance }}</option>
+    {% endfor %}
+  </select>
+  <input class="button button--create" type="submit" value="Create Stack">
+</form>
