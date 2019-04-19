@@ -16,7 +16,37 @@ class CloudFormationClient(object):
         self.client.create_stack(
             StackName=params.get("app_name"),
             TemplateBody=json_string,
-            OnFailure='ROLLBACK')
+            OnFailure='ROLLBACK',
+            Parameters=[
+                {
+                    'ParameterKey': 'DBName',
+                    'ParameterValue': params.get("db_name"),
+                },
+                {
+                    'ParameterKey': 'DBUser',
+                    'ParameterValue': params.get("db_user"),
+                },
+                {
+                    'ParameterKey': 'DBPassword',
+                    'ParameterValue': params.get("db_password"),
+                },
+                {
+                    'ParameterKey': 'DBAllocatedStorage',
+                    'ParameterValue': params.get("db_allocated_storage"),
+                },
+                {
+                    'ParameterKey': 'DBInstanceClass',
+                    'ParameterValue': params.get("db_type"),
+                },
+                {
+                    'ParameterKey': 'InstanceType',
+                    'ParameterValue': params.get("ec2_type"),
+                },
+                {
+                    'ParameterKey': 'WebServerCapacity',
+                    'ParameterValue': params.get("web_server_capacity"),
+                }
+            ])
 
     def cf_client(self):
         return boto3.client(
