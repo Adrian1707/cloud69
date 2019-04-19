@@ -27,21 +27,9 @@
               {% endfor %}
              </div>
             <div class="col-md-2">
-              <form action="/cloud69/create_stack" method="POST">
-                {% csrf_token %}
-                <input type="text" name="github_url">
-                <input class="button button--create" type="submit" value="Create Stack">
-              </form>
-
               <form action="/cloud69/new_stack" method="GET">
                 {% csrf_token %}
                 <input class="button button--create" type="submit" value="New Application">
-              </form>
-
-
-              <form action="/cloud69/delete_all" method="POST">
-                {% csrf_token %}
-                <input class="button button--delete" type="submit" value="Delete instances">
               </form>
             </div>
           </div>
