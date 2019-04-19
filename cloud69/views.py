@@ -7,15 +7,21 @@ import boto3
 import pdb
 
 def index(request):
+    stacks = CloudFormationClient().get_stacks()
     template = loader.get_template('cloud69/index.html')
-    instance_models = []
 
-    html = template.render({'instance_models': instance_models }, request)
+    html = template.render({'stacks': stacks["StackSummaries"] }, request)
     return HttpResponse(html)
 
 def new_stack(request):
     template = loader.get_template("cloud69/new_stack.html")
     return HttpResponse(template.render({"ec2_instance_types": ec2_instance_types, "db_instance_types": db_instance_types}, request))
+
+def delete_stack(request):
+    name = request.POST.dict().get("stack_name")
+    CloudFormationClient().delete_stack(name)
+    template = loader.get_template("cloud69/delete.html")
+    return HttpResponse(template.render({}, request))
 
 def create_stack(request):
     CloudFormationClient().create_stack(request.POST.dict())

@@ -14,14 +14,13 @@
           <h1 class="mt-2">Cloud69</h1>
           <div class="row">
             <div class="col-md-10 instances">
-              {% for instance in instance_models %}
+              {% for stack in stacks %}
                 <div class="instance">
-                  <p>Instance Id: {{ instance.instance_id }}</p>
-                  <p>Instance Name: {{ instance.name }}</p>
-                  <form action="/cloud69/delete" method="POST">
+                  <p>Stack Name: {{ stack.StackName }}</p>
+                  <form action="/cloud69/delete_stack" method="POST">
                     {% csrf_token %}
-                    <input class="button button--delete" type="submit" value="Delete instance">
-                    <input type="hidden" name="instance_id" value={{ instance.instance_id}}>
+                    <input class="button button--delete" type="submit" value="Delete Stack">
+                    <input type="hidden" name="stack_name" value={{ stack.StackName}}>
                   </form>
                 </div>
               {% endfor %}
