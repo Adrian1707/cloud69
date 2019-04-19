@@ -5,18 +5,21 @@
 
   "Parameters" : {
     "VpcId" : {
+      "Default": "vpc-f21d859a",
       "Type" : "AWS::EC2::VPC::Id",
       "Description" : "VpcId of your existing Virtual Private Cloud (VPC)",
       "ConstraintDescription" : "must be the VPC Id of an existing Virtual Private Cloud."
     },
 
     "Subnets" : {
+      "Default": "subnet-7760ce0d,subnet-a9bc40e5,subnet-e694f68f",
       "Type" : "List<AWS::EC2::Subnet::Id>",
       "Description" : "The list of SubnetIds in your Virtual Private Cloud (VPC)",
       "ConstraintDescription" : "must be a list of at least two existing subnets associated with at least two different availability zones. They should be residing in the selected Virtual Private Cloud."
     },
 
     "KeyName": {
+      "Default": "MyTodoApp",
       "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instances",
       "Type": "AWS::EC2::KeyPair::KeyName",
       "ConstraintDescription" : "must be the name of an existing EC2 KeyPair."
@@ -33,6 +36,7 @@
     },
 
     "DBUser": {
+      "Default": "MyDatabase",
       "NoEcho": "true",
       "Description" : "Username for MySQL database access",
       "Type": "String",
@@ -43,6 +47,7 @@
     },
 
     "DBPassword": {
+      "Default": "MyDatabase",
       "NoEcho": "true",
       "Description" : "Password for MySQL database access",
       "Type": "String",
