@@ -11,12 +11,12 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12">
-          <h1 class="mt-2">Cloud69</h1>
+          <h1 class="mt-2">Cloud</h1>
           <div class="row">
-            <div class="col-md-10 instances">
+            <div class="col-md-10 stacks">
               {% for stack in stacks %}
-                <div class="instance">
-                  <p>Stack Name: {{ stack.StackName }}</p>
+                <div class="stack">
+                  <p>{{ stack.StackName }}</p>
                   <form action="/cloud69/delete_stack" method="POST">
                     {% csrf_token %}
                     <input class="button button--delete" type="submit" value="Delete Stack">

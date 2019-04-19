@@ -7,7 +7,26 @@ import boto3
 import pdb
 
 def index(request):
-    stacks = CloudFormationClient().get_stacks()
+    # stacks = CloudFormationClient().get_stacks()
+    stacks = {
+        "StackSummaries": [
+            {
+                "StackName": "Quote API",
+            },
+            {
+                "StackName": "Pricing API",
+            },
+            {
+                "StackName": "Pricing Admin",
+            },
+            {
+                "StackName": "Dify",
+            },
+            {
+                "StackName": "Batching",
+            }
+        ]
+    }
     template = loader.get_template('cloud69/index.html')
 
     html = template.render({'stacks': stacks["StackSummaries"] }, request)

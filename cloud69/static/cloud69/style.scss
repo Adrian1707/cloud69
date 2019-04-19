@@ -1,13 +1,14 @@
 $cloud69-green: #62c462;
 $cloud69-red: #c33;
 
-.instance {
+.stack {
   border-top: 2px solid $cloud69-green;
   margin-right: 10%;
 }
 
-.instances {
+.stacks {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .button {
@@ -31,4 +32,3 @@ $cloud69-red: #c33;
     cursor: pointer;
   }
 }
-
