@@ -1,10 +1,15 @@
 $cloud69-green: #62c462;
 $cloud69-red: #c33;
+$cloud69-dark-green: #390;
 
 .stack {
-  border-top: 2px solid $cloud69-green;
+  border-top: 3px solid $cloud69-dark-green;
   margin-right: 3%;
   width: 30%;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+  background: #fff;
+  padding: 10px 12px;
+  margin-bottom: 25px;
 }
 
 .stacks {
@@ -61,6 +66,12 @@ $cloud69-red: #c33;
   }
 }
 
+.stack-title {
+  font-size: 14px;
+  color: $cloud69-dark-green;
+  font-weight: 700;
+}
+
 .button {
   border-radius: 60px;
   font-weight: 500;
@@ -71,6 +82,7 @@ $cloud69-red: #c33;
   &--create {
     background-color: $cloud69-green;
     border-color: $cloud69-green;
+    width: 200px !important;
   }
 
   &--delete {

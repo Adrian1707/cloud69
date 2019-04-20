@@ -16,12 +16,7 @@
             <div class="col-md-10 stacks">
               {% for stack in stacks %}
                 <div class="stack">
-                  <p>{{ stack.StackName }}</p>
-                  <form action="/stacks/delete" method="POST">
-                    {% csrf_token %}
-                    <input class="button button--delete" type="submit" value="Delete Stack">
-                    <input type="hidden" name="stack_name" value={{ stack.StackName}}>
-                  </form>
+                  <p class="stack-title">{{ stack.StackName }}</p>
                 </div>
               {% endfor %}
              </div>

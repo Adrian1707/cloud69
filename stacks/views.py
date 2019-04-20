@@ -7,29 +7,29 @@ import boto3
 import pdb
 
 def index(request):
-    stacks = CloudFormationClient().get_stacks()
-    # stacks = {
-    #     "StackSummaries": [
-    #         {
-    #             "StackName": "Quote API",
-    #         },
-    #         {
-    #             "StackName": "Pricing API",
-    #         },
-    #         {
-    #             "StackName": "Pricing Admin",
-    #         },
-    #         {
-    #             "StackName": "Dify",
-    #         },
-    #         {
-    #             "StackName": "Batching",
-    #         },
-    #         {
-    #             "StackName": "Microservice Authenticator",
-    #         }
-    #     ]
-    # }
+    # stacks = CloudFormationClient().get_stacks()
+    stacks = {
+        "StackSummaries": [
+            {
+                "StackName": "Quote API",
+            },
+            {
+                "StackName": "Pricing API",
+            },
+            {
+                "StackName": "Pricing Admin",
+            },
+            {
+                "StackName": "Dify",
+            },
+            {
+                "StackName": "Batching",
+            },
+            {
+                "StackName": "Microservice Authenticator",
+            }
+        ]
+    }
     template = loader.get_template('stacks/index.html')
 
     html = template.render({'stacks': stacks["StackSummaries"] }, request)

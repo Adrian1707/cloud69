@@ -417,10 +417,10 @@
                   "yum -y install git\n",
                   "cd /home/ec2-user\n",
                   "git clone {github_url}\n",
-                  "gem install bundler\n",
                   "cd {app_name}\n",
-                  "mv /tmp/database.yml config\n"
+                  "gem install bundler\n",
                   "bundle install\n",
+                  "mv -f /tmp/database.yml config\n",
                   "# Kill the rails server if it is running to allow update\n",
                   "if pgrep ruby &> /dev/null ; then pkill -TERM ruby ; fi\n",
 
