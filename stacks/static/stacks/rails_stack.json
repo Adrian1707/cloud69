@@ -419,10 +419,7 @@
                   "git clone {github_url}\n",
                   "gem install bundler\n",
                   "cd {app_name}\n",
-
-                  "# Configure the database connection\n",
-                  "mv /tmp/database.yml config\n",
-
+                  "mv /tmp/database.yml config\n"
                   "bundle install\n",
                   "# Kill the rails server if it is running to allow update\n",
                   "if pgrep ruby &> /dev/null ; then pkill -TERM ruby ; fi\n",

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% sass_src 'cloud69/style.scss' %}">
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'stacks/style.scss' %}">
     <title>Cloud69</title>
   </head>
   <div class="container">
@@ -13,7 +13,7 @@
     </div>
     <div class="row">
       <div class="form-wrapper">
-        <form action="/cloud69/create_stack" class="new-stack-form" method="POST">
+        <form action="/stacks/create" class="new-stack-form" method="POST">
           {% csrf_token %}
           <label>The Github URL for your app<input type="text" name="github_url"></label>
           <label>The name you want to call this app<input type="text" name="app_name"></label>

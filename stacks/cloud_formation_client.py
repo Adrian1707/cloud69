@@ -13,7 +13,7 @@ class CloudFormationClient(object):
         )
 
     def create_stack(self, params):
-        json_string = open("/code/cloud69/static/cloud69/rails_stack.json").read()
+        json_string = open("/code/stacks/static/stacks/rails_stack.json").read()
         github_url = params.get("github_url")
         app_name = github_url.split("/")[-1]
         json_string = json_string.replace('{github_url}', github_url)

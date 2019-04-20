@@ -1,53 +1,53 @@
 from django.http import HttpResponse
 from django.template import loader, Context
-from cloud69.cloud_formation_client import *
-from cloud69.models import *
+from stacks.cloud_formation_client import *
+from stacks.models import *
 import json
 import boto3
 import pdb
 
 def index(request):
-    # stacks = CloudFormationClient().get_stacks()
-    stacks = {
-        "StackSummaries": [
-            {
-                "StackName": "Quote API",
-            },
-            {
-                "StackName": "Pricing API",
-            },
-            {
-                "StackName": "Pricing Admin",
-            },
-            {
-                "StackName": "Dify",
-            },
-            {
-                "StackName": "Batching",
-            },
-            {
-                "StackName": "Microservice Authenticator",
-            }
-        ]
-    }
-    template = loader.get_template('cloud69/index.html')
+    stacks = CloudFormationClient().get_stacks()
+    # stacks = {
+    #     "StackSummaries": [
+    #         {
+    #             "StackName": "Quote API",
+    #         },
+    #         {
+    #             "StackName": "Pricing API",
+    #         },
+    #         {
+    #             "StackName": "Pricing Admin",
+    #         },
+    #         {
+    #             "StackName": "Dify",
+    #         },
+    #         {
+    #             "StackName": "Batching",
+    #         },
+    #         {
+    #             "StackName": "Microservice Authenticator",
+    #         }
+    #     ]
+    # }
+    template = loader.get_template('stacks/index.html')
 
     html = template.render({'stacks': stacks["StackSummaries"] }, request)
     return HttpResponse(html)
 
-def new_stack(request):
-    template = loader.get_template("cloud69/new_stack.html")
+def new(request):
+    template = loader.get_template("stacks/new.html")
     return HttpResponse(template.render({"ec2_instance_types": ec2_instance_types, "db_instance_types": db_instance_types}, request))
 
-def delete_stack(request):
+def delete(request):
     name = request.POST.dict().get("stack_name")
     CloudFormationClient().delete_stack(name)
-    template = loader.get_template("cloud69/delete.html")
+    template = loader.get_template("stacks/delete.html")
     return HttpResponse(template.render({}, request))
 
-def create_stack(request):
+def create(request):
     CloudFormationClient().create_stack(request.POST.dict())
-    template = loader.get_template("cloud69/success.html")
+    template = loader.get_template("stacks/success.html")
     return HttpResponse(template.render({}, request))
 
 def ec2_instance_types():
