@@ -3,12 +3,62 @@ $cloud69-red: #c33;
 
 .stack {
   border-top: 2px solid $cloud69-green;
-  margin-right: 10%;
+  margin-right: 3%;
+  width: 30%;
 }
 
 .stacks {
   display: flex;
   flex-wrap: wrap;
+}
+
+.app-info-box {
+  border: 1px solid #e5d6b0;
+  border-radius: 5px;
+  height: 20%;
+  width: 80%;
+  margin-top: 2%;
+  background-color: #fff9ea;
+
+  p {
+    list-style: none;
+    font-weight: 400;
+    font-size: 23px;
+    font-size: 1.5rem;
+    line-height: 1;
+    margin-top: 26px;
+    margin-left: 10px;
+  }
+}
+
+.form-wrapper {
+  border: 1px solid #e5d6b0;
+  border-radius: 5px;
+  height: 90%;
+  width: 78%;
+  margin-top: 3%;
+  position: relative;
+}
+
+.new-stack-form {
+  position: absolute;
+  margin-left: 10%;
+
+  label {
+    display: block;
+  }
+
+  input {
+    width: 90%;
+    border-radius: 10px;
+    border: 1px solid #e5d6b0;
+  }
+
+  select {
+    width: 67%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+  }
 }
 
 .button {

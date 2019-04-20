@@ -24,6 +24,9 @@ def index(request):
             },
             {
                 "StackName": "Batching",
+            },
+            {
+                "StackName": "Microservice Authenticator",
             }
         ]
     }
