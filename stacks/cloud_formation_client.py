@@ -15,9 +15,11 @@ class CloudFormationClient(object):
     def create_stack(self, params):
         json_string = open("/code/stacks/static/stacks/rails_stack.json").read()
         github_url = params.get("github_url")
+        ruby_version = params.get("ruby_version")
         app_name = github_url.split("/")[-1]
         json_string = json_string.replace('{github_url}', github_url)
         json_string = json_string.replace('{app_name}', app_name)
+        json_string = json_string.replace('{ruby_version}', ruby_version)
         self.client.create_stack(
             StackName=params.get("app_name"),
             TemplateBody=json_string,

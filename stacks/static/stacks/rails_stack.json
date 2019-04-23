@@ -305,7 +305,7 @@
       "Metadata" : {
         "AWS::CloudFormation::Init" : {
           "configSets" : {
-            "full_install" : [ "install_cfn", "install_ruby_2_6_2", "configure_mysql", "install_application" ]
+            "full_install" : [ "install_cfn", "install_ruby", "configure_mysql", "install_application" ]
           },
 
           "install_cfn" : {
@@ -347,7 +347,7 @@
             }
           },
 
-          "install_ruby_2_6_2": {
+          "install_ruby": {
             "files": {
               "/tmp/install_ruby": {
                 "content": {
@@ -357,8 +357,8 @@
                       "#!/bin/bash",
                       "curl -sSL https://get.rvm.io | bash",
                       "source /etc/profile.d/rvm.sh",
-                      "rvm install 2.6.2",
-                      "rvm --default use 2.6.2"
+                      "rvm install {ruby_version}",
+                      "rvm --default use {ruby_version}"
                     ]
                   ]
                 },
@@ -390,7 +390,7 @@
                 "content" : { "Fn::Join" : ["", [
                   "#!/bin/bash -e\n",
                   "source /etc/profile.d/rvm.sh\n",
-                  "rvm use 2.6.2\n",
+                  "rvm use {ruby_version}\n",
                   "export HOME=/home/ec2-user\n",
                   "export PATH=$PATH:/usr/local/bin\n",
                   "yum -y groupinstall 'Development Tools'\n",
@@ -416,7 +416,7 @@
                 "content" : { "Fn::Join" : ["", [
                   "#!/bin/bash -e\n",
                   "source /etc/profile.d/rvm.sh\n",
-                  "rvm use 2.6.2\n",
+                  "rvm use {ruby_version}\n",
                   "export HOME=/home/ec2-user\n",
                   "export PATH=$PATH:/usr/local/bin\n",
                   "cd /home/ec2-user/{app_name}\n",
