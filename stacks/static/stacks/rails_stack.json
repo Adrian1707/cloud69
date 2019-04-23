@@ -295,7 +295,8 @@
         "MinSize" : "1",
         "MaxSize" : "5",
         "DesiredCapacity" : { "Ref" : "WebServerCapacity" },
-        "TargetGroupARNs" : [ { "Ref" : "ALBTargetGroup" } ]
+        "TargetGroupARNs" : [ { "Ref" : "ALBTargetGroup" } ],
+        "AutoScalingGroupName": "Version3"
       }
     },
 
@@ -304,7 +305,7 @@
       "Metadata" : {
         "AWS::CloudFormation::Init" : {
           "configSets" : {
-            "full_install" : [ "install_cfn", "install_ruby_2_3_1", "configure_mysql", "install_application" ]
+            "full_install" : [ "install_cfn", "install_ruby_2_6_2", "configure_mysql", "install_application" ]
           },
 
           "install_cfn" : {
@@ -346,7 +347,7 @@
             }
           },
 
-          "install_ruby_2_3_1": {
+          "install_ruby_2_6_2": {
             "files": {
               "/tmp/install_ruby": {
                 "content": {
@@ -356,9 +357,8 @@
                       "#!/bin/bash",
                       "curl -sSL https://get.rvm.io | bash",
                       "source /etc/profile.d/rvm.sh",
-                      "rvm install 2.3.1",
-                      "rvm --default use 2.3.1",
-                      "gem install rails"
+                      "rvm install 2.6.2",
+                      "rvm --default use 2.6.2"
                     ]
                   ]
                 },
@@ -386,48 +386,27 @@
 
           "install_application" : {
             "files" : {
-              "/tmp/database.yml" : {
-               "content" : { "Fn::Join" : ["", [
-                  "default: &default\n",
-                  "  adapter: mysql2\n",
-                  "  encoding: utf8\n",
-                  "  reconnect: false\n",
-                  "  pool: 5\n",
-                  "  database: ", { "Ref" : "DBName" }, "\n",
-                  "  username: ", { "Ref" : "DBUser" }, "\n",
-                  "  password: ", { "Ref" : "DBPassword" }, "\n",
-                  "  host: ", { "Fn::GetAtt": [ "MySQLDatabase", "Endpoint.Address" ] }, "\n",
-                  "  port: ", { "Fn::GetAtt": [ "MySQLDatabase", "Endpoint.Port" ] }, "\n",
-                  "development:\n",
-                  "  <<: *default\n",
-                  "production:\n",
-                  "  <<: *default\n"
-                ]]},
-                "mode"  : "000400",
-                "owner" : "root",
-                "group" : "root"
-              },
               "/tmp/install_application" : {
                 "content" : { "Fn::Join" : ["", [
                   "#!/bin/bash -e\n",
                   "source /etc/profile.d/rvm.sh\n",
-                  "rvm use 2.3.1\n",
+                  "rvm use 2.6.2\n",
                   "export HOME=/home/ec2-user\n",
                   "export PATH=$PATH:/usr/local/bin\n",
-                  "yum -y install git\n",
+                  "yum -y groupinstall 'Development Tools'\n",
                   "cd /home/ec2-user\n",
                   "git clone {github_url}\n",
                   "cd {app_name}\n",
                   "gem install bundler\n",
                   "bundle install\n",
-                  "mv -f /tmp/database.yml config\n",
                   "# Kill the rails server if it is running to allow update\n",
                   "if pgrep ruby &> /dev/null ; then pkill -TERM ruby ; fi\n",
 
-                  "# Since there are multiple instances running, conditionalize the migration\n",
-                  "# so that only 1 host creates the tables. In the real world, you may check to\n",
-                  "# see if the table matches the schema and do a migrate so that updates work\n",
-                  "bundle exec rake db:migrate\n"
+                  "DB_HOST=", { "Fn::GetAtt": [ "MySQLDatabase", "Endpoint.Address" ] }, " ",
+                  "DB_PORT=", { "Fn::GetAtt": [ "MySQLDatabase", "Endpoint.Port" ] }, " ",
+                  "DB_NAME=", { "Ref" : "DBName" }, " ",
+                  "DB_USER=", { "Ref" : "DBUser" }, " ",
+                  "DB_PASSWORD=", { "Ref" : "DBPassword" }, " ", "bundle exec rake db:migrate\n"
                 ]]},
                 "mode"  : "000500",
                 "owner" : "root",
@@ -437,13 +416,16 @@
                 "content" : { "Fn::Join" : ["", [
                   "#!/bin/bash -e\n",
                   "source /etc/profile.d/rvm.sh\n",
-                  "rvm use 2.3.1\n",
+                  "rvm use 2.6.2\n",
                   "export HOME=/home/ec2-user\n",
                   "export PATH=$PATH:/usr/local/bin\n",
                   "cd /home/ec2-user/{app_name}\n",
-
                   "# Startup the application\n",
-                  "rails server --binding 0.0.0.0 -p 80 -d\n"
+                  "DB_HOST=", { "Fn::GetAtt": [ "MySQLDatabase", "Endpoint.Address" ] }, " ",
+                  "DB_PORT=", { "Fn::GetAtt": [ "MySQLDatabase", "Endpoint.Port" ] }, " ",
+                  "DB_NAME=", { "Ref" : "DBName" }, " ",
+                  "DB_USER=", { "Ref" : "DBUser" }, " ",
+                  "DB_PASSWORD=", { "Ref" : "DBPassword" }, " ", "rails server --binding 0.0.0.0 -p 80 -d\n"
                 ]]},
                 "mode"  : "000500",
                 "owner" : "root",
