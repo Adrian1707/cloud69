@@ -10,8 +10,10 @@ through a managed PaaS like Elastic Beanstalk or Heroku, so this service provide
 
 ```
 Ensure you have Docker and Docker Compose installed
-git clone https://github.com/Adrian1707/cloud69
+git clone https://github.com/Adrian1707/cloud69.git
 cd cloud69
+Set two ENVS: AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY obtained from your ~/.aws/credentials file
+Inside the rails_stack.json file I still have the VPC and subnet ids from my AWS account inside the Parameters list. Change this if you want to get it working. 
 docker-compose build
 docker-compose up
 visit localhost:8000/stacks
