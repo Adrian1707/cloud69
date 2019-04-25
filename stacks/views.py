@@ -8,6 +8,8 @@ import pdb
 
 def index(request):
     # stacks = CloudFormationClient().get_stacks()
+    # Commenting out the "get_stacks" call because I rarely leave stacks running due to the
+    # running expenses incurred. I fake the data below instead
     stacks = {
         "StackSummaries": [
             {
