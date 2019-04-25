@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from django.template import loader, Context
 from stacks.cloud_formation_client import *
-from stacks.models import *
 import json
 import boto3
 import pdb
