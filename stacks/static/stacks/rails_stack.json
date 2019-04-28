@@ -25,6 +25,36 @@
       "ConstraintDescription" : "must be the name of an existing EC2 KeyPair."
     },
 
+    "AppName": {
+      "Description" : "Name of the App",
+      "Type": "String",
+      "MinLength": "1",
+      "MaxLength": "64",
+      "ConstraintDescription" : "must be present"
+    },
+
+    "GithubUrl": {
+      "Description" : "Github url",
+      "Type": "String",
+      "MinLength": "1",
+      "MaxLength": "100",
+      "ConstraintDescription" : "Must be present"
+    },
+
+    "CommitSha": {
+      "Description" : "Github commit sha",
+      "Type": "String",
+      "MinLength": "1",
+      "MaxLength": "100",
+      "ConstraintDescription" : "Must be present"
+    },
+
+    "RubyVersion": {
+      "Description" : "Ruby version",
+      "Type": "String",
+      "ConstraintDescription" : "Must be present"
+    },
+
     "DBName": {
       "Default": "MyDatabase",
       "Description" : "MySQL database name",
@@ -296,7 +326,7 @@
         "MaxSize" : "5",
         "DesiredCapacity" : { "Ref" : "WebServerCapacity" },
         "TargetGroupARNs" : [ { "Ref" : "ALBTargetGroup" } ],
-        "AutoScalingGroupName": "Version3"
+        "AutoScalingGroupName": { "Ref" : "CommitSha" }
       }
     },
 
@@ -352,13 +382,13 @@
               "/tmp/install_ruby": {
                 "content": {
                   "Fn::Join": [
-                    "\n",
+                    "",
                     [
-                      "#!/bin/bash",
-                      "curl -sSL https://get.rvm.io | bash",
-                      "source /etc/profile.d/rvm.sh",
-                      "rvm install {ruby_version}",
-                      "rvm --default use {ruby_version}"
+                      "#!/bin/bash\n",
+                      "curl -sSL https://get.rvm.io | bash\n",
+                      "source /etc/profile.d/rvm.sh\n",
+                      "rvm install ", { "Ref" : "RubyVersion" }, "\n",
+                      "rvm --default use ", { "Ref" : "RubyVersion" }, "\n"
                     ]
                   ]
                 },
@@ -390,13 +420,13 @@
                 "content" : { "Fn::Join" : ["", [
                   "#!/bin/bash -e\n",
                   "source /etc/profile.d/rvm.sh\n",
-                  "rvm use {ruby_version}\n",
+                  "rvm use ", { "Ref" : "RubyVersion" }, "\n",
                   "export HOME=/home/ec2-user\n",
                   "export PATH=$PATH:/usr/local/bin\n",
                   "yum -y groupinstall 'Development Tools'\n",
                   "cd /home/ec2-user\n",
-                  "git clone {github_url}\n",
-                  "cd {app_name}\n",
+                  "git clone ", { "Ref" : "GithubUrl" }, "\n",
+                  "cd ", { "Ref" : "AppName" }, "\n",
                   "gem install bundler\n",
                   "bundle install\n",
                   "# Kill the rails server if it is running to allow update\n",
@@ -416,10 +446,10 @@
                 "content" : { "Fn::Join" : ["", [
                   "#!/bin/bash -e\n",
                   "source /etc/profile.d/rvm.sh\n",
-                  "rvm use {ruby_version}\n",
+                  "rvm use ", { "Ref" : "RubyVersion" }, "\n",
                   "export HOME=/home/ec2-user\n",
                   "export PATH=$PATH:/usr/local/bin\n",
-                  "cd /home/ec2-user/{app_name}\n",
+                  "cd /home/ec2-user/", { "Ref" : "AppName" }, "\n",
                   "# Startup the application\n",
                   "DB_HOST=", { "Fn::GetAtt": [ "MySQLDatabase", "Endpoint.Address" ] }, " ",
                   "DB_PORT=", { "Fn::GetAtt": [ "MySQLDatabase", "Endpoint.Port" ] }, " ",

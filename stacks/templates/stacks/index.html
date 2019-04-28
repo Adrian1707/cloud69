@@ -17,6 +17,11 @@
               {% for stack in stacks %}
                 <div class="stack">
                   <p class="stack-title">{{ stack.StackName }}</p>
+                  <form action="/stacks/update" method="GET">
+                    {% csrf_token %}
+                    <input type="hidden" name="stack_name" value={{ stack.StackName }}>
+                    <input class="button button--update" type="submit" value="Deploy">
+                  </form>
                 </div>
               {% endfor %}
              </div>

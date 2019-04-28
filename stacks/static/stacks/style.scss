@@ -85,6 +85,11 @@ $cloud69-dark-green: #390;
     width: 200px !important;
   }
 
+  &--update {
+    background-color: $cloud69-green;
+    border-color: $cloud69-green;
+  }
+
   &--delete {
     background-color: $cloud69-red;
     border-color: $cloud69-red;

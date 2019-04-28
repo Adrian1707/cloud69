@@ -6,31 +6,31 @@ import boto3
 import pdb
 
 def index(request):
-    # stacks = CloudFormationClient().get_stacks()
+    stacks = CloudFormationClient().get_stacks()
     # Commenting out the "get_stacks" call because I rarely leave stacks running due to the
     # running expenses incurred. I fake the data below instead
-    stacks = {
-        "StackSummaries": [
-            {
-                "StackName": "Quote API",
-            },
-            {
-                "StackName": "Pricing API",
-            },
-            {
-                "StackName": "Pricing Admin",
-            },
-            {
-                "StackName": "Dify",
-            },
-            {
-                "StackName": "Batching",
-            },
-            {
-                "StackName": "Microservice Authenticator",
-            }
-        ]
-    }
+    # stacks = {
+    #     "StackSummaries": [
+    #         {
+    #             "StackName": "Quote API",
+    #         },
+    #         {
+    #             "StackName": "Pricing API",
+    #         },
+    #         {
+    #             "StackName": "Pricing Admin",
+    #         },
+    #         {
+    #             "StackName": "Dify",
+    #         },
+    #         {
+    #             "StackName": "Batching",
+    #         },
+    #         {
+    #             "StackName": "Microservice Authenticator",
+    #         }
+    #     ]
+    # }
     template = loader.get_template('stacks/index.html')
 
     html = template.render({'stacks': stacks["StackSummaries"] }, request)
@@ -48,6 +48,11 @@ def delete(request):
 
 def create(request):
     CloudFormationClient().create_stack(request.POST.dict())
+    template = loader.get_template("stacks/success.html")
+    return HttpResponse(template.render({}, request))
+
+def update(request):
+    CloudFormationClient().update_stack(request.GET.dict()["stack_name"])
     template = loader.get_template("stacks/success.html")
     return HttpResponse(template.render({}, request))
 
