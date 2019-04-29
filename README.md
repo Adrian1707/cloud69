@@ -5,6 +5,8 @@ The idea is to abstract away the infrastructure provisioning for a standard Rail
 some additional parameters like how many servers you want and hit "Create". It's often too fiddly to get something online without going 
 through a managed PaaS like Elastic Beanstalk or Heroku, so this service provides a simple wrapper to AWS services
 
+This currently allows you to upload and deploy a MySQL backed Rails app and deploy updates to the master branch with a single button click.
+
 
 ## Install
 
