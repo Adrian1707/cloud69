@@ -16,6 +16,13 @@ git clone https://github.com/Adrian1707/cloud69.git
 cd cloud69
 Set two ENVS: AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY obtained from your ~/.aws/credentials file
 Inside the rails_stack.json file I still have the VPC and subnet ids from my AWS account inside the Parameters list. Change this if you want to get it working. 
+Inside your database.yml file, when setting the name, host, port, username and password, these need to be referenced via envs specified like so. This is because when the db migration runs through the CloudFormation template, the variables are passed
+through with these names
+- ENV["DB_HOST"]
+- ENV["DB_PORT"]
+- ENV["DB_USER"]
+- ENV["DB_PASSWORD"]
+- ENV["DB_NAME"]
 docker-compose build
 docker-compose up
 visit localhost:8000/stacks
